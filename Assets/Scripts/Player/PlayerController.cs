@@ -2,20 +2,24 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum PlayerFaceDirection { Forward = 0, Backward = 180 }
-
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 5f;
 
     private float _curYRotation = 0;        // 0 ⇌ 180
     private PlayerFaceDirection _curFaceDirection;
+    private ShootableZoneManager _shootableZoneManager;
 
     public PlayerFaceDirection CurFaceDirection => _curFaceDirection;
 
     void Awake()
     {
         _curFaceDirection = PlayerFaceDirection.Forward;       // start facing forward
+    }
+
+    void Start()
+    {
+        _shootableZoneManager = ShootableZoneManager.Instance;
     }
 
     // being called internally by the input system
@@ -25,6 +29,17 @@ public class PlayerController : MonoBehaviour
         _curFaceDirection = _curYRotation == 0 ? PlayerFaceDirection.Forward : PlayerFaceDirection.Backward;
 
         StartCoroutine(RotatePlayer());
+    }
+
+    // being called internally by the input system
+    private void OnShootBrain(InputValue val)
+    {
+        Vector2 value = val.Get<Vector2>();
+
+        if (value == Vector2.zero) return;
+
+        // find and shoot brain at zombie
+        _shootableZoneManager.FindZombieToShoot(_curFaceDirection == PlayerFaceDirection.Forward ? ZPosition.Forward : ZPosition.Backward, value.x < 0 ? XPosition.Left : XPosition.Right);
     }
 
     IEnumerator RotatePlayer()

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BrainsParent
   - ZombiesParent
+  - Zombie
   layers:
   - Default
   - TransparentFX
