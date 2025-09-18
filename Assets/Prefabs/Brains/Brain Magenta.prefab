@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7614620922364191470, guid: 369510dad686477479804248983bf5c7, type: 3}
+      propertyPath: brainColor
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2162324536261046941, guid: 369510dad686477479804248983bf5c7, type: 3}
       propertyPath: m_Name
       value: Brain Magenta
