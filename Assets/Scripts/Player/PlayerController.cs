@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum PlayerFaceDirection { Left = 0, Right = 180 }
+public enum PlayerFaceDirection { Forward = 0, Backward = 180 }
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,14 +15,14 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        _curFaceDirection = PlayerFaceDirection.Left;       // start facing left
+        _curFaceDirection = PlayerFaceDirection.Forward;       // start facing forward
     }
 
     // being called internally by the input system
     private void OnSwitchCamRotation(InputValue val)
     {
         _curYRotation = _curYRotation == 0 ? 180 : 0;
-        _curFaceDirection = _curYRotation == 0 ? PlayerFaceDirection.Left : PlayerFaceDirection.Right;
+        _curFaceDirection = _curYRotation == 0 ? PlayerFaceDirection.Forward : PlayerFaceDirection.Backward;
 
         StartCoroutine(RotatePlayer());
     }

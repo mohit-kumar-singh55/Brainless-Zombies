@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class BrainController : MonoBehaviour
 {
-    [SerializeField] BrainColor brainColor = BrainColor.Yellow;     // yellow by default
+    [SerializeField] Color brainColor = Color.Yellow;     // yellow by default
 
     private Vector3 _moveDirection;
     private float _moveSpeed = 0.1f;        // 0.1 by default if not set
 
-    public BrainColor BrainColor => brainColor;
+    public Color BrainColor => brainColor;
 
     public delegate void BrainHit(BrainController brain);
     public event BrainHit OnBrainHit;

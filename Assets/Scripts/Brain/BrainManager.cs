@@ -1,7 +1,5 @@
 using UnityEngine;
 
-public enum BrainColor { Yellow, Magenta, Blue }
-
 public class BrainManager : MonoBehaviour
 {
     public static BrainManager Instance { get; private set; }
