@@ -8,7 +8,6 @@ public struct ZombieInZone
     public XPosition XPosition;
     public Color Color;
     public Rigidbody rb;
-    // public ZombieController zombie;
 
     public ZombieInZone(Transform transform, ZPosition zPosition, XPosition xPosition, Color color, Rigidbody rb)
     {
@@ -41,19 +40,19 @@ public class ShootableZoneManager : MonoBehaviour
 
     public ZombieInZone FindZombieToShoot(ZPosition zPosition, XPosition xPosition, Color brainColor)
     {
-        ZombieInZone zombieInZone = _zombiesInZone.Find(zom => zom.ZPosition == zPosition && zom.XPosition == xPosition);     // supposing it should be the first zombie
+        // remove any destroyed zombies
+        _zombiesInZone.RemoveAll(zom => zom.Transform == null);
 
-        if (zombieInZone.Transform != null && zombieInZone.Transform.position != Vector3.zero)
-        {
-            // check if zombie is of same color as of brain, if so remove zombie from here
-            if (zombieInZone.Color == brainColor) _zombiesInZone.Remove(zombieInZone);
+        ZombieInZone zombieInZone = _zombiesInZone.Find(zom => zom.ZPosition == zPosition && zom.XPosition == xPosition);
 
-            // shoot brain
-            // Debug.Log("Shooting brain " + zombieInZone.Transform.position);
-            return zombieInZone;
-        }
+        if (zombieInZone.Transform == null)
+            return new ZombieInZone(null, zPosition, xPosition, brainColor, null);
 
-        // just null
-        return new ZombieInZone(null, zPosition, xPosition, brainColor, null);
+        // check match
+        if (zombieInZone.Color == brainColor)
+            _zombiesInZone.Remove(zombieInZone);
+
+        return zombieInZone;
     }
+
 }

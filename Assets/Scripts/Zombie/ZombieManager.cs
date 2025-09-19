@@ -23,9 +23,9 @@ public class ZombieManager : MonoBehaviour
         Instance = this;
     }
 
-    public void IncreaseMoveSpeed() => zombieMoveSpeed += zombieMoveSpeed * 0.1f;
+    public void IncreaseMoveSpeed() => zombieMoveSpeed += zombieMoveSpeed * 0.2f;
 
-    public void DecreaseSpawnInterval() => spawnInterval -= spawnInterval * 0.08f;
+    public void DecreaseSpawnInterval() => spawnInterval -= spawnInterval * 0.2f;
 
     public GameObject GetRandomZombiePrefab() => zombiePrefabs[Random.Range(0, zombiePrefabs.Length)];
 }

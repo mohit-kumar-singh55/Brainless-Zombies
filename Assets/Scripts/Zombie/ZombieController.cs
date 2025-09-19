@@ -13,9 +13,6 @@ public class ZombieController : MonoBehaviour
 
     public Color ZombieColor => zombieColor;
 
-    // public delegate void ZombieHit(ZombieController zombie);
-    // public event ZombieHit OnZombieHit;
-
     void Awake()
     {
         _rb = GetComponent<Rigidbody>();
