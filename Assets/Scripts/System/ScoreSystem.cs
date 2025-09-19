@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class ScoreSystem : MonoBehaviour
@@ -6,6 +7,7 @@ public class ScoreSystem : MonoBehaviour
 
     private int _score = 0;
     private ZombieManager zombieManager;
+    public TMP_Text scoreText;
 
     public int Score => _score;
 
@@ -37,6 +39,7 @@ public class ScoreSystem : MonoBehaviour
     public void AddScore(int score)
     {
         _score += score;
+        scoreText.text = _score.ToString();
         Debug.Log("Score: " + _score);
 
         if (_score % 5 == 0)

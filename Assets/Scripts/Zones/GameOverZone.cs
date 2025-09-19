@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOverZone : MonoBehaviour
 {
@@ -7,7 +8,10 @@ public class GameOverZone : MonoBehaviour
         if (other.CompareTag(Tags.Zombie))
         {
             // Game over
-            Time.timeScale = 0;
+            SceneManager.LoadScene("ResultScene");
+            
+            PlayerPrefs.SetInt(PlayerPrefsValues.PLAYER_SCORE,ScoreSystem.Instance.Score);
+            PlayerPrefs.Save();
         }
     }
 }
