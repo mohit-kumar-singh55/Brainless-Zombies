@@ -41,7 +41,7 @@ public class ShootableZoneManager : MonoBehaviour
 
     public ZombieInZone FindZombieToShoot(ZPosition zPosition, XPosition xPosition, Color brainColor)
     {
-        ZombieInZone zombieInZone = _zombiesInZone.Find(z => z.ZPosition == zPosition && z.XPosition == xPosition);     // supposing it should be the first zombie
+        ZombieInZone zombieInZone = _zombiesInZone.Find(zom => zom.ZPosition == zPosition && zom.XPosition == xPosition);     // supposing it should be the first zombie
 
         if (zombieInZone.Transform != null && zombieInZone.Transform.position != Vector3.zero)
         {

@@ -56,6 +56,9 @@ public class ZombieController : MonoBehaviour
         _rb.AddForceAtPosition((brainPos - transform.position).normalized * 50, forcePos, ForceMode.Impulse);
         _rb.AddTorque(Vector3.up * 50, ForceMode.Impulse);
 
+        // adding score
+        ScoreSystem.Instance.AddScore(1);
+
         Destroy(gameObject, 1.5f);
     }
 }
