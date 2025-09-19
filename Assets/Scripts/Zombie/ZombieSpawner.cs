@@ -47,7 +47,6 @@ public class ZombieSpawner : MonoBehaviour
         {
             zombieController.SetMoveDirection((_playerTrans.position - spawnPoint.position).normalized);
             zombieController.SetMoveSpeed(_zombieManager.ZombieMoveSpeed);
-            // zombieController.OnZombieHit += DeleteZombie;
         }
     }
 

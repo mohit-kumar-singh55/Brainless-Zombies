@@ -8,18 +8,15 @@ public class PlayerController : MonoBehaviour
 
     private float _curYRotation = 0;        // 0 ⇌ 180
     private PlayerFaceDirection _curFaceDirection;
-    private ShootableZoneManager _shootableZoneManager;
+
+    public delegate void BrainShoot(ZPosition zPosition, XPosition xPosition);
+    public static event BrainShoot OnBrainShoot;
 
     public PlayerFaceDirection CurFaceDirection => _curFaceDirection;
 
     void Awake()
     {
         _curFaceDirection = PlayerFaceDirection.Forward;       // start facing forward
-    }
-
-    void Start()
-    {
-        _shootableZoneManager = ShootableZoneManager.Instance;
     }
 
     // being called internally by the input system
@@ -39,7 +36,7 @@ public class PlayerController : MonoBehaviour
         if (value == Vector2.zero) return;
 
         // find and shoot brain at zombie
-        _shootableZoneManager.FindZombieToShoot(_curFaceDirection == PlayerFaceDirection.Forward ? ZPosition.Forward : ZPosition.Backward, value.x < 0 ? XPosition.Left : XPosition.Right);
+        OnBrainShoot?.Invoke(_curFaceDirection == PlayerFaceDirection.Forward ? ZPosition.Forward : ZPosition.Backward, value.x < 0 ? XPosition.Left : XPosition.Right);
     }
 
     IEnumerator RotatePlayer()

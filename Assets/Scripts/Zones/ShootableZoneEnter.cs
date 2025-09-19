@@ -14,6 +14,6 @@ public class ShootableZoneEnter : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(Tags.Zombie)) _shootableZoneManager.AddZombieInZone(new ZombieInZone(other.transform, zPosition, xPosition));
+        if (other.CompareTag(Tags.Zombie)) _shootableZoneManager.AddZombieInZone(new ZombieInZone(other.transform, zPosition, xPosition, other.GetComponent<ZombieController>().ZombieColor, other.GetComponent<Rigidbody>()));
     }
 }

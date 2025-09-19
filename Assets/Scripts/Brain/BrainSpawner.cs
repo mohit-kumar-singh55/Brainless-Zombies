@@ -4,19 +4,34 @@ using UnityEngine;
 
 public class BrainSpawner : MonoBehaviour, IBrainSpawner
 {
+    [SerializeField] private ZPosition zPosition = ZPosition.Forward;
+
     private Transform _playerTrans;
     private Transform _brainsParent;
     private BrainManager _brainManager;
-    private Queue<BrainController> _brains = new();
+    // private Queue<BrainController> _brains = new();
+    private List<BrainController> _brains = new();
     private WaitForSeconds _waitForSecondsToSpawn;      // caching for performance
+    private ShootableZoneManager _shootableZoneManager;
 
-    public Queue<BrainController> Brains => _brains;
+    // public Queue<BrainController> Brains => _brains;
+
+    void OnEnable()
+    {
+        PlayerController.OnBrainShoot += ShootBrain;
+    }
+
+    void OnDisable()
+    {
+        PlayerController.OnBrainShoot -= ShootBrain;
+    }
 
     void Start()
     {
         _playerTrans = FindAnyObjectByType<PlayerController>().transform;
         _brainManager = BrainManager.Instance;
         _brainsParent = GameObject.FindWithTag(Tags.BrainsParent).transform;
+        _shootableZoneManager = ShootableZoneManager.Instance;
 
         if (_playerTrans == null || _brainManager == null)
         {
@@ -45,12 +60,38 @@ public class BrainSpawner : MonoBehaviour, IBrainSpawner
 
     public void AddBrain(BrainController brain)
     {
-        _brains.Enqueue(brain);
+        // _brains.Enqueue(brain);
+        _brains.Add(brain);
     }
 
     public void DeleteBrain(BrainController brain)
     {
-        _brains.Dequeue();
+        // _brains.Dequeue();
+        _brains.Remove(brain);
+    }
+
+    private void ShootBrain(ZPosition zPlayerPosition, XPosition xPosition)
+    {
+        if (zPosition == zPlayerPosition)
+        {
+            // ZombieInZone zombieInZone = _shootableZoneManager.FindZombieToShoot(zPlayerPosition, xPosition, _brains.Peek().BrainColor);
+            ZombieInZone zombieInZone = _shootableZoneManager.FindZombieToShoot(zPlayerPosition, xPosition, _brains[0].BrainColor);
+
+            // Debug.Log(_brains.Peek().BrainColor);
+
+            // shoot at the zombie
+            if (zombieInZone.Transform != null && zombieInZone.rb != null)
+            {
+                // _brains.Dequeue().ShootItSelf(zombieInZone.Transform.position + new Vector3(0f, 1f, 0f));
+                if (_brains.Count > 0)
+                {
+                    BrainController brain = _brains[0];
+                    brain.ShootItSelf(zombieInZone.Transform.position + new Vector3(0f, 2.8f, 0f));
+                    _brains.Remove(brain);
+                }
+            }
+            // Debug.Log(_brains.Count);
+        }
     }
 
     IEnumerator SpawnBrains()
