@@ -53,7 +53,7 @@ public class BgmManager : MonoBehaviour
             case "TitleScene":
                 TitleBgm();
                 break;
-            case "MainScene":
+            case "Main Scene":
                 MainGameBgm();
                 break;
             case "ResultScene":
