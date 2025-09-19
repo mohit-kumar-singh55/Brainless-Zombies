@@ -57,7 +57,11 @@ public class BrainController : MonoBehaviour
         {
             if (other.TryGetComponent(out ZombieController zombieController))
             {
-                if (zombieController.ZombieColor == brainColor) zombieController.PushBackItSelf(transform.position, other.ClosestPoint(transform.position));
+                if (zombieController.ZombieColor == brainColor)
+                {
+                    zombieController.PushBackItSelf(transform.position, other.ClosestPoint(transform.position));
+                    CameraController.Instance.ShakeCamera();
+                }
             }
         }
 
